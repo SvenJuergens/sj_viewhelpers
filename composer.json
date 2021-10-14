@@ -2,38 +2,33 @@
     "name": "svenjuergens/sj_viewhelpers",
     "type": "typo3-cms-extension",
     "description": "Small Collection of ViewHelpers",
-    "license": ["GPL-2.0-or-later"],
-    "support": {
-        "issues": "https://github.com/SvenJuergens/sj_viewhelpers/issues"
-    },
+    "license": [
+        "GPL-2.0-or-later"
+    ],
     "require": {
-       "typo3/cms-core": "^9.5.25 || ^10.4.14",
-		"ext-libxml": "*",
-		"ext-dom": "*",
-		"ext-simplexml": "*"
-	},
+        "typo3/cms-core": "^9.5.30 || ^10.4.19 || ^11.5.0",
+        "ext-libxml": "*",
+        "ext-dom": "*",
+        "ext-simplexml": "*"
+    },
     "autoload": {
         "psr-4": {
             "SvenJuergens\\SjViewhelpers\\": "Classes/"
         }
     },
-    "replace": {
-        "svenjuergens/sj_viewhelpers": "self.version"
-    },
     "extra": {
         "typo3/cms": {
-			"cms-package-dir": "{$vendor-dir}/typo3/cms",
-			"extension-key": "sj_viewhelpers",
-			"web-dir": "web"
-		}
+            "extension-key": "sj_viewhelpers",
+            "web-dir": "web"
+        }
     },
     "require-dev": {
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "php-parallel-lint/php-console-highlighter": "^0.5.0"
     },
-	"scripts": {
-		"test:php:lint": [
-			"parallel-lint --exclude vendor --exclude web ."
-		]
-	}
+    "scripts": {
+        "test:php:lint": [
+            "parallel-lint --exclude vendor --exclude web ."
+        ]
+    }
 }
