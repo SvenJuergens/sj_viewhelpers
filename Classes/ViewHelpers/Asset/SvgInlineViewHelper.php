@@ -68,7 +68,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
         parent::initializeArguments();
         $this->registerArgument('image', 'object', 'a FAL object');
         $this->registerArgument('path', 'string', 'Path to the Folder with the svg File');
-        $this->registerArgument('src', 'string', 'a path to a file');
+        $this->registerArgument('src', 'string', 'a path to a file, overwrites Path');
         $this->registerArgument('class', 'string', 'Css class for the svg');
         $this->registerArgument('width', 'string', 'Width of the svg.', false);
         $this->registerArgument('height', 'string', 'Height of the svg.', false);
@@ -90,10 +90,14 @@ class SvgInlineViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ) {
 
-        $src = $arguments['path'] . trim($renderChildrenClosure()) . '.svg';
-        if($src === ''){
-            $src = (string)$arguments['src'];
+        $src = '';
+        if(!empty($arguments['path'])){
+            $src = $arguments['path'] . trim($renderChildrenClosure()) . '.svg';
         }
+        if(!empty($arguments['src'])){{
+            $src = (string)$arguments['src'];
+        }}
+
         $image = $arguments['image'];
 
         if (($src === '' && $image === null) || ($src !== '' && $image !== null)) {
