@@ -18,7 +18,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_email' => 'typo3@blue-side.de',
     'state' => 'stable',
     'author_company' => '',
-    'version' => '6.3.1',
+    'version' => '6.4.0',
     'constraints' => [
         'depends' => [
         ]
