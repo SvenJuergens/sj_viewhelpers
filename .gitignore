@@ -15,3 +15,5 @@ tests/_output/*
 composer.lock
 /vendor
 /web
+
+/.Build/

@@ -19,16 +19,26 @@
     "extra": {
         "typo3/cms": {
             "extension-key": "sj_viewhelpers",
-            "web-dir": "web"
-        }
+			"app-dir": ".Build",
+			"web-dir": ".Build/public"
+		}
     },
+	"config": {
+		"vendor-dir": ".Build/vendor"
+	},
     "require-dev": {
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "php-parallel-lint/php-console-highlighter": "^0.5.0"
     },
     "scripts": {
         "test:php:lint": [
-            "parallel-lint --exclude vendor --exclude web ."
-        ]
-    }
+            "parallel-lint --exclude .Build ."
+        ],
+		"cgl": [
+			"php-cs-fixer fix --config=.php-cs-fixer.php --diff --dry-run --verbose"
+		],
+		"cglFix": [
+			"php-cs-fixer fix --config=.php-cs-fixer.php"
+		]
+	}
 }
