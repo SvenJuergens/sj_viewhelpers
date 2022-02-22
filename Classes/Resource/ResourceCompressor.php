@@ -21,7 +21,7 @@ class ResourceCompressor extends \TYPO3\CMS\Core\Resource\ResourceCompressor
 {
 
     /**
-     * @param $content
+     * @param string $content
      * @return string
      */
     public function publicCompressCssString(string $content): string
