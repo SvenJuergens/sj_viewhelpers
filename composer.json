@@ -6,7 +6,8 @@
         "GPL-2.0-or-later"
     ],
     "require": {
-        "typo3/cms-core": "^9.5.30 || ^10.4.19 || ^11.5.0",
+        "typo3/cms-core": "^9.5.30 || ^10.4 || ^11.5",
+		"typo3/cms-extbase": "^9.5.30 || ^10.4 || ^11.5",
         "ext-libxml": "*",
         "ext-dom": "*",
         "ext-simplexml": "*"
