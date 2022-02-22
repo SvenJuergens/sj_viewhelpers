@@ -94,9 +94,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
             $src = $arguments['path'] . trim($renderChildrenClosure()) . '.svg';
         }
         if (!empty($arguments['src'])) {
-            {
             $src = (string)$arguments['src'];
-        }
         }
 
         $image = $arguments['image'];
@@ -121,25 +119,54 @@ class SvgInlineViewHelper extends AbstractViewHelper
             }
 
             // Disables the functionality to allow external entities to be loaded when parsing the XML, must be kept
-            $previousValueOfEntityLoader = libxml_disable_entity_loader(true);
+            $previousValueOfEntityLoader = false;
+            if (PHP_MAJOR_VERSION < 8) {
+                $previousValueOfEntityLoader = libxml_disable_entity_loader(true);
+            }
             $svgElement = simplexml_load_string($svgContent);
-            libxml_disable_entity_loader($previousValueOfEntityLoader);
+            if (PHP_MAJOR_VERSION < 8) {
+                libxml_disable_entity_loader($previousValueOfEntityLoader);
+            }
+            if (!$svgElement instanceof \SimpleXMLElement) {
+                return '';
+            }
 
-            // Override css class
-            $svgElement = self::setAttribute($svgElement, 'class', filter_var(trim((string)$arguments['class']), FILTER_SANITIZE_STRING));
-            $svgElement = self::setAttribute($svgElement, 'width', (int)$arguments['width']);
-            $svgElement = self::setAttribute($svgElement, 'height', (int)$arguments['height']);
+            // Override attributes
+            $class = $arguments['class'];
+            $class = filter_var(trim((string) $class), FILTER_SANITIZE_STRING);
+            $class = $class !== false ? $class : null;
+            $svgElement = self::setAttribute($svgElement, 'class', $class);
+
+            $width = $arguments['width'];
+            $width = ((int)$width) > 0 ? (string) ((int)$width) : null;
+            $svgElement = self::setAttribute($svgElement, 'width', $width);
+
+            $height = $arguments['height'];
+            $height = ((int)$height) > 0 ? (string) ((int)$height) : null;
+            $svgElement = self::setAttribute($svgElement, 'height', $height);
+
 
             if ($arguments['setRole'] === true) {
                 $svgElement = self::setAttribute($svgElement, 'role', 'img');
             }
 
-            $svgElement = self::setChild($svgElement, 'desc', filter_var(trim((string)$arguments['description']), FILTER_SANITIZE_STRING));
-            $svgElement = self::setChild($svgElement, 'title', filter_var(trim((string)$arguments['title']), FILTER_SANITIZE_STRING));
+            $desc = $arguments['description'];
+            $desc = filter_var(trim((string) $desc), FILTER_SANITIZE_STRING);
+            $desc = $desc !== false ? $desc : null;
+            $svgElement = self::setChild($svgElement, 'desc', $desc);
+
+            $title = $arguments['title'];
+            $title = filter_var(trim((string) $title), FILTER_SANITIZE_STRING);
+            $title = $title !== false ? $title : null;
+            $svgElement = self::setChild($svgElement, 'title', $title);
 
             // remove xml version tag
             $domXml = dom_import_simplexml($svgElement);
-            return $domXml->ownerDocument->saveXML($domXml->ownerDocument->documentElement);
+            /** @phpstan-ignore-next-line */
+            if (!$domXml instanceof \DOMElement || !$domXml->ownerDocument instanceof \DOMDocument) {
+                return '';
+            }
+            return (string) $domXml->ownerDocument->saveXML($domXml->ownerDocument->documentElement);
         } catch (ResourceDoesNotExistException $e) {
             // thrown if file does not exist
             throw new \Exception($e->getMessage(), 1530601100, $e);
@@ -158,12 +185,12 @@ class SvgInlineViewHelper extends AbstractViewHelper
     /**
      * @param \SimpleXMLElement $element
      * @param string $attribute
-     * @param mixed $value
+     * @param string|null $value
      * @return \SimpleXMLElement
      */
-    protected static function setAttribute(\SimpleXMLElement $element, $attribute, $value): \SimpleXMLElement
+    protected static function setAttribute(\SimpleXMLElement $element, string $attribute, ?string $value): \SimpleXMLElement
     {
-        if ($value) {
+        if ($value !== null) {
             if (isset($element->attributes()->$attribute)) {
                 $element->attributes()->$attribute = $value;
             } else {
@@ -177,12 +204,12 @@ class SvgInlineViewHelper extends AbstractViewHelper
     /**
      * @param \SimpleXMLElement $element
      * @param string $child
-     * @param mixed $value
+     * @param string|null $value
      * @return \SimpleXMLElement
      */
-    protected static function setChild(\SimpleXMLElement $element, $child, $value): \SimpleXMLElement
+    protected static function setChild(\SimpleXMLElement $element, string $child, ?string $value): \SimpleXMLElement
     {
-        if ($value) {
+        if ($value !== null) {
             if (isset($element->children()->$child)) {
                 $element->children()->$child = $value;
             } else {
@@ -204,6 +231,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
      * Return an instance of ImageService using object manager
      *
      * @return ImageService
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     protected static function getImageService(): ImageService
     {
