@@ -16,6 +16,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
  */
 
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Security\SvgSanitizer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Service\ImageService;
@@ -75,6 +76,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
         $this->registerArgument('title', 'string', 'Title tag of the svg.', false);
         $this->registerArgument('description', 'string', 'Description of the svg.', false);
         $this->registerArgument('setRole', 'bool', 'Add role="img" to the svg.', false, true);
+        $this->registerArgument('useSvgSanitizer', 'bool', 'use advanced SvgSanitizer', false, true);
     }
 
     /**
@@ -111,7 +113,11 @@ class SvgInlineViewHelper extends AbstractViewHelper
             }
 
             $svgContent = $image->getContents();
-            $svgContent = trim(preg_replace('/<script[\s\S]*?>[\s\S]*?<\/script>/i', '', $svgContent));
+            if($arguments['useSvgSanitizer'] === true) {
+                $svgContent = (new SvgSanitizer())->sanitizeContent($svgContent);
+            }else {
+                $svgContent = trim(preg_replace('/<script[\s\S]*?>[\s\S]*?<\/script>/i', '', $svgContent));
+            }
 
             // Exit if file does not contain content
             if (empty($svgContent)) {
