@@ -59,11 +59,11 @@ class MetaTagViewHelper extends AbstractViewHelper
      */
     public function initializeArguments(): void
     {
-        $this->registerArgument('type', 'string', 'The type of the meta tag. Allowed values are property, name or http-equiv', true, 'name' );
+        $this->registerArgument('type', 'string', 'The type of the meta tag. Allowed values are property, name or http-equiv', true, 'name');
         $this->registerArgument('name', 'string', 'The name of the property to add', true);
-        $this->registerArgument('content', 'string', 'The content of the meta tag',false );
-        $this->registerArgument('subProperties', 'array', 'Subproperties of the meta tag (like e.g. og:image:width -> {width: 400, height:400})',false );
-        $this->registerArgument('replace', 'bool', 'Replace earlier set meta tag',false, true );
+        $this->registerArgument('content', 'string', 'The content of the meta tag', false);
+        $this->registerArgument('subProperties', 'array', 'Subproperties of the meta tag (like e.g. og:image:width -> {width: 400, height:400})', false);
+        $this->registerArgument('replace', 'bool', 'Replace earlier set meta tag', false, true);
 
         $this->registerArgument('useCurrentDomain', 'boolean', 'Use current domain', false, false);
         $this->registerArgument('forceAbsoluteUrl', 'boolean', 'Force absolut domain', false, false);
@@ -71,7 +71,6 @@ class MetaTagViewHelper extends AbstractViewHelper
 
     /**
      * Renders a meta tag
-     *
      */
     public function render()
     {

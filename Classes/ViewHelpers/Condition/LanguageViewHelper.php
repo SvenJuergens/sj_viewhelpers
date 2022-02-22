@@ -58,7 +58,7 @@ class LanguageViewHelper extends AbstractConditionViewHelper
      * @param RenderingContextInterface $renderingContext
      * @return bool
      */
-    public static function verdict(array $arguments, RenderingContextInterface $renderingContext) :bool
+    public static function verdict(array $arguments, RenderingContextInterface $renderingContext): bool
     {
         $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
         $siteLanguage = $request ? $request->getAttribute('language') : null;

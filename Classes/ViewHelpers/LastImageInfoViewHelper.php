@@ -14,7 +14,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
- *
  * ViewHelper to get the ImageInfos like width and hight
  *
  * # Example:
@@ -39,7 +38,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <img src="..." loading="lazy" width="{sj:lastImageInfo(property: 'width')}" height="{sj:lastImageInfo(property: 'height')}">
  * </code>
  */
-
 class LastImageInfoViewHelper extends AbstractViewHelper
 {
     use CompileWithRenderStatic;
@@ -56,7 +54,7 @@ class LastImageInfoViewHelper extends AbstractViewHelper
         'origFile_mtime' => 'origFile_mtime',
         'originalFile' => 'originalFile',
         'processedFile' => 'processedFile',
-        'fileCacheHash' => 'fileCacheHash'
+        'fileCacheHash' => 'fileCacheHash',
     ];
 
     /**

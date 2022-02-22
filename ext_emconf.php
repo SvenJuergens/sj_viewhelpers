@@ -21,6 +21,6 @@ $EM_CONF[$_EXTKEY] = [
     'version' => '6.4.0',
     'constraints' => [
         'depends' => [
-        ]
-    ]
+        ],
+    ],
 ];

@@ -14,9 +14,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Implementation of youtube support
@@ -93,7 +92,7 @@ class YoutubeViewHelper extends AbstractViewHelper
 
     /**
      * @param string $element
-     * @return null|string
+     * @return string|null
      */
     public static function getYoutubeUrl($element): ?string
     {

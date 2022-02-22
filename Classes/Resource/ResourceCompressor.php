@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 namespace SvenJuergens\SjViewhelpers\Resource;
 
 /*
@@ -16,7 +17,8 @@ namespace SvenJuergens\SjViewhelpers\Resource;
  * This new class is used to allow to separately compress CSS code, which is not possible
  * by directly using TYPO3 Core.
  */
-class ResourceCompressor extends \TYPO3\CMS\Core\Resource\ResourceCompressor {
+class ResourceCompressor extends \TYPO3\CMS\Core\Resource\ResourceCompressor
+{
 
     /**
      * @param $content

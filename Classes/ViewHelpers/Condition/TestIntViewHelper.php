@@ -56,7 +56,7 @@ class TestIntViewHelper extends AbstractConditionViewHelper
      * @param RenderingContextInterface $renderingContext
      * @return bool
      */
-    public static function verdict(array $arguments, RenderingContextInterface $renderingContext) :bool
+    public static function verdict(array $arguments, RenderingContextInterface $renderingContext): bool
     {
         return MathUtility::canBeInterpretedAsInteger($arguments['value']) === true;
     }

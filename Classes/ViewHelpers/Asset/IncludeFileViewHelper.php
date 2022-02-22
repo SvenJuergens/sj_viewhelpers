@@ -18,8 +18,8 @@ use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * ViewHelper to include a css/js file
@@ -117,7 +117,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
                 $arguments['path'] = null;
             }
         }
-        if(empty($arguments['path'])){
+        if (empty($arguments['path'])) {
             return;
         }
         /** @var PageRenderer $pageRenderer */
@@ -137,7 +137,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
                 $arguments['async'],
                 $arguments['integrity']
             );
-            // CSS
+        // CSS
         } elseif (strtolower(substr($arguments['path'], -4)) === '.css') {
             $pageRenderer->addCssFile(
                 $arguments['path'],

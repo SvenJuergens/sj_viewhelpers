@@ -50,7 +50,7 @@ class YoutubeVideoIdViewHelper extends AbstractViewHelper
 
     /**
      * @param string $element
-     * @return null|string
+     * @return string|null
      */
     public function getYoutubeVideoId($element)
     {

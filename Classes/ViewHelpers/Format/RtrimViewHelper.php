@@ -1,6 +1,6 @@
 <?php
-namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
 
+namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
 
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -30,9 +30,6 @@ class RtrimViewHelper extends AbstractViewHelper
 {
     use CompileWithContentArgumentAndRenderStatic;
 
-    /**
-     * @return void
-     */
     public function initializeArguments()
     {
         $this->registerArgument('content', 'string', 'String to trim');

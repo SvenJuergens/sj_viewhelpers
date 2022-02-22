@@ -16,8 +16,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  */
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 use TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /* Extends the ImageViewhelper to allow lazyload
  *
@@ -116,7 +116,6 @@ class LazyImageViewHelper extends ImageViewHelper
             if (empty($this->arguments['title']) && $image->hasProperty('title')) {
                 $this->tag->addAttribute('title', $image->getProperty('title'));
             }
-
         } catch (ResourceDoesNotExistException $e) {
             // thrown if file does not exist
             throw new Exception($e->getMessage(), 1509741911, $e);

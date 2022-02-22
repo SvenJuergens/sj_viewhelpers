@@ -20,9 +20,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * ViewHelper to include inline SVG
@@ -89,14 +89,15 @@ class SvgInlineViewHelper extends AbstractViewHelper
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
-
         $src = '';
-        if(!empty($arguments['path'])){
+        if (!empty($arguments['path'])) {
             $src = $arguments['path'] . trim($renderChildrenClosure()) . '.svg';
         }
-        if(!empty($arguments['src'])){{
+        if (!empty($arguments['src'])) {
+            {
             $src = (string)$arguments['src'];
-        }}
+        }
+        }
 
         $image = $arguments['image'];
 
@@ -129,13 +130,12 @@ class SvgInlineViewHelper extends AbstractViewHelper
             $svgElement = self::setAttribute($svgElement, 'width', (int)$arguments['width']);
             $svgElement = self::setAttribute($svgElement, 'height', (int)$arguments['height']);
 
-            if($arguments['setRole'] === true){
+            if ($arguments['setRole'] === true) {
                 $svgElement = self::setAttribute($svgElement, 'role', 'img');
             }
 
             $svgElement = self::setChild($svgElement, 'desc', filter_var(trim((string)$arguments['description']), FILTER_SANITIZE_STRING));
             $svgElement = self::setChild($svgElement, 'title', filter_var(trim((string)$arguments['title']), FILTER_SANITIZE_STRING));
-
 
             // remove xml version tag
             $domXml = dom_import_simplexml($svgElement);
@@ -154,7 +154,6 @@ class SvgInlineViewHelper extends AbstractViewHelper
             throw new \Exception($e->getMessage(), 1530601103, $e);
         }
     }
-
 
     /**
      * @param \SimpleXMLElement $element
@@ -191,7 +190,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
                 $targetDom = dom_import_simplexml($element);
                 $hasChildren = $targetDom->hasChildNodes();
                 $newNode = $element->addChild($child, $value);
-                if ($hasChildren){
+                if ($hasChildren) {
                     $newNodeDom = $targetDom->ownerDocument->importNode(dom_import_simplexml($newNode), true);
                     $targetDom->insertBefore($newNodeDom, $targetDom->firstChild);
                     $element = simplexml_import_dom($targetDom);
@@ -211,6 +210,5 @@ class SvgInlineViewHelper extends AbstractViewHelper
         /** @var ImageService $objectManager */
         return GeneralUtility::makeInstance(ObjectManager::class)
             ->get(ImageService::class);
-
     }
 }
