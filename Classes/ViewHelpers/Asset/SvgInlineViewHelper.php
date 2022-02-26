@@ -70,11 +70,11 @@ class SvgInlineViewHelper extends AbstractViewHelper
         $this->registerArgument('image', 'object', 'a FAL object');
         $this->registerArgument('path', 'string', 'Path to the Folder with the svg File');
         $this->registerArgument('src', 'string', 'a path to a file, overwrites Path');
-        $this->registerArgument('class', 'string', 'Css class for the svg');
-        $this->registerArgument('width', 'string', 'Width of the svg.', false);
-        $this->registerArgument('height', 'string', 'Height of the svg.', false);
-        $this->registerArgument('title', 'string', 'Title tag of the svg.', false);
-        $this->registerArgument('description', 'string', 'Description of the svg.', false);
+        $this->registerArgument('class', 'string', 'Css class for the svg', false, null);
+        $this->registerArgument('width', 'string', 'Width of the svg.', false, null);
+        $this->registerArgument('height', 'string', 'Height of the svg.', false, null);
+        $this->registerArgument('title', 'string', 'Title tag of the svg.', false, null);
+        $this->registerArgument('description', 'string', 'Description of the svg.', false, null);
         $this->registerArgument('setRole', 'bool', 'Add role="img" to the svg.', false, true);
         $this->registerArgument('useSvgSanitizer', 'bool', 'use advanced SvgSanitizer', false, true);
     }
@@ -138,33 +138,42 @@ class SvgInlineViewHelper extends AbstractViewHelper
             }
 
             // Override attributes
-            $class = $arguments['class'];
-            $class = filter_var(trim((string) $class), FILTER_SANITIZE_STRING);
-            $class = $class !== false ? $class : null;
-            $svgElement = self::setAttribute($svgElement, 'class', $class);
+            if($arguments['class'] !== null){
+                $class = $arguments['class'];
+                $class = filter_var(trim((string) $class), FILTER_SANITIZE_STRING);
+                $class = $class !== false ? $class : null;
+                $svgElement = self::setAttribute($svgElement, 'class', $class);
+            }
+            if($arguments['width']){
+                $width = $arguments['width'];
+                $width = ((int)$width) > 0 ? (string) ((int)$width) : null;
+                $svgElement = self::setAttribute($svgElement, 'width', $width);
+            }
 
-            $width = $arguments['width'];
-            $width = ((int)$width) > 0 ? (string) ((int)$width) : null;
-            $svgElement = self::setAttribute($svgElement, 'width', $width);
-
-            $height = $arguments['height'];
-            $height = ((int)$height) > 0 ? (string) ((int)$height) : null;
-            $svgElement = self::setAttribute($svgElement, 'height', $height);
-
+            if($arguments['height'] !== null){
+                $height = $arguments['height'];
+                $height = ((int)$height) > 0 ? (string) ((int)$height) : null;
+                $svgElement = self::setAttribute($svgElement, 'height', $height);
+            }
 
             if ($arguments['setRole'] === true) {
                 $svgElement = self::setAttribute($svgElement, 'role', 'img');
             }
 
-            $desc = $arguments['description'];
-            $desc = filter_var(trim((string) $desc), FILTER_SANITIZE_STRING);
-            $desc = $desc !== false ? $desc : null;
-            $svgElement = self::setChild($svgElement, 'desc', $desc);
+            if($arguments['description'] !== null) {
+                $desc = $arguments['description'];
+                $desc = filter_var(trim((string) $desc), FILTER_SANITIZE_STRING);
+                $desc = $desc !== false ? $desc : null;
+                $svgElement = self::setChild($svgElement, 'desc', $desc);
+            }
 
-            $title = $arguments['title'];
-            $title = filter_var(trim((string) $title), FILTER_SANITIZE_STRING);
-            $title = $title !== false ? $title : null;
-            $svgElement = self::setChild($svgElement, 'title', $title);
+            if($arguments['title'] !== null){
+                $title = $arguments['title'];
+                $title = filter_var(trim((string) $title), FILTER_SANITIZE_STRING);
+                $title = $title !== false ? $title : null;
+                $svgElement = self::setChild($svgElement, 'title', $title);
+            }
+
 
             // remove xml version tag
             $domXml = dom_import_simplexml($svgElement);
