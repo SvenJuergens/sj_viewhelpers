@@ -140,8 +140,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
             // Override attributes
             if($arguments['class'] !== null){
                 $class = $arguments['class'];
-                $class = filter_var(trim((string) $class), FILTER_SANITIZE_STRING);
-                $class = $class !== false ? $class : null;
+                $class = htmlspecialchars($class ?? '');
                 $svgElement = self::setAttribute($svgElement, 'class', $class);
             }
             if($arguments['width']){
@@ -161,16 +160,14 @@ class SvgInlineViewHelper extends AbstractViewHelper
             }
 
             if($arguments['description'] !== null) {
-                $desc = $arguments['description'];
-                $desc = filter_var(trim((string) $desc), FILTER_SANITIZE_STRING);
-                $desc = $desc !== false ? $desc : null;
-                $svgElement = self::setChild($svgElement, 'desc', $desc);
+                $description = $arguments['description'];
+                $description = htmlspecialchars($description ?? '');
+                $svgElement = self::setChild($svgElement, 'desc', $description);
             }
 
             if($arguments['title'] !== null){
                 $title = $arguments['title'];
-                $title = filter_var(trim((string) $title), FILTER_SANITIZE_STRING);
-                $title = $title !== false ? $title : null;
+                $title = htmlspecialchars($title ?? '');
                 $svgElement = self::setChild($svgElement, 'title', $title);
             }
 
