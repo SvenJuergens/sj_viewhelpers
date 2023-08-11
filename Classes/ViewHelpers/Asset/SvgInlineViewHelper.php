@@ -18,7 +18,6 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Asset;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Security\SvgSanitizer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
@@ -64,7 +63,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
      *
      * @throws Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('image', 'object', 'a FAL object');
@@ -90,7 +89,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): string {
         $src = '';
         if (!empty($arguments['path'])) {
             $src = $arguments['path'] . trim($renderChildrenClosure()) . '.svg';
@@ -243,12 +242,9 @@ class SvgInlineViewHelper extends AbstractViewHelper
      * Return an instance of ImageService using object manager
      *
      * @return ImageService
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     protected static function getImageService(): ImageService
     {
-        /** @var ImageService $objectManager */
-        return GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(ImageService::class);
+        return GeneralUtility::makeInstance(ImageService::class);
     }
 }
