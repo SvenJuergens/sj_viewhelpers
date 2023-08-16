@@ -50,7 +50,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
     /**
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'path',
@@ -99,20 +99,16 @@ class IncludeFileViewHelper extends AbstractViewHelper
      * @param array $arguments
      * @param \Closure $renderChildrenClosure
      * @param RenderingContextInterface $renderingContext
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidFileNameException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InvalidPathException
      */
     public static function renderStatic(
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): void {
         if ($arguments['external'] === false) {
             try {
                 $arguments['path'] = GeneralUtility::makeInstance(FilePathSanitizer::class)
-                    ->sanitize((string)$arguments['path']);
+                    ->sanitize((string)$arguments['path'], true);
             } catch (\Exception $e) {
                 $arguments['path'] = null;
             }
