@@ -16,7 +16,10 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  */
 use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /* Extends the ImageViewhelper to allow lazyload
@@ -42,40 +45,79 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
  * </output>
  *
  *
+ * @deprecated
 */
 
-class LazyImageViewHelper extends ImageViewHelper
+class LazyImageViewHelper  extends AbstractTagBasedViewHelper
 {
+    /**
+     * @var string
+     */
+    protected $tagName = 'img';
+
+    protected ImageService $imageService;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->imageService = GeneralUtility::makeInstance(ImageService::class);
+        trigger_error('deprecated with TYPO3 v12.0., replace it with self written img tag and f:uri:image', E_USER_DEPRECATED);
+
+    }
     /**
      * Initialize arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
+        $this->registerUniversalTagAttributes();
+        $this->registerTagAttribute('alt', 'string', 'Specifies an alternate text for an image', false);
+        $this->registerTagAttribute('ismap', 'string', 'Specifies an image as a server-side image-map. Rarely used. Look at usemap instead', false);
+        $this->registerTagAttribute('longdesc', 'string', 'Specifies the URL to a document that contains a long description of an image', false);
+        $this->registerTagAttribute('usemap', 'string', 'Specifies an image as a client-side image-map', false);
+        $this->registerTagAttribute('loading', 'string', 'Native lazy-loading for images property. Can be "lazy", "eager" or "auto"', false);
+        $this->registerTagAttribute('decoding', 'string', 'Provides an image decoding hint to the browser. Can be "sync", "async" or "auto"', false);
+
+        $this->registerArgument('src', 'string', 'a path to a file, a combined FAL identifier or an uid (int). If $treatIdAsReference is set, the integer is considered the uid of the sys_file_reference record. If you already got a FAL object, consider using the $image parameter instead', false, '');
+        $this->registerArgument('treatIdAsReference', 'bool', 'given src argument is a sys_file_reference record', false, false);
+        $this->registerArgument('image', 'object', 'a FAL object (\\TYPO3\\CMS\\Core\\Resource\\File or \\TYPO3\\CMS\\Core\\Resource\\FileReference)');
+        $this->registerArgument('crop', 'string|bool', 'overrule cropping of image (setting to FALSE disables the cropping set in FileReference)');
+        $this->registerArgument('cropVariant', 'string', 'select a cropping variant, in case multiple croppings have been specified or stored in FileReference', false, 'default');
+        $this->registerArgument('fileExtension', 'string', 'Custom file extension to use');
+
+        $this->registerArgument('width', 'string', 'width of the image. This can be a numeric value representing the fixed width of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
+        $this->registerArgument('height', 'string', 'height of the image. This can be a numeric value representing the fixed height of the image in pixels. But you can also perform simple calculations by adding "m" or "c" to the value. See imgResource.width for possible options.');
+        $this->registerArgument('minWidth', 'int', 'minimum width of the image');
+        $this->registerArgument('minHeight', 'int', 'minimum height of the image');
+        $this->registerArgument('maxWidth', 'int', 'maximum width of the image');
+        $this->registerArgument('maxHeight', 'int', 'maximum height of the image');
+        $this->registerArgument('absolute', 'bool', 'Force absolute URL', false, false);
         $this->registerTagAttribute('data-lazy', 'string', 'original image for lazy loading', false);
     }
 
     /**
-     * Resizes a given image (if required) and renders the respective img tag
+     * Resizes a given image (if required) and renders the respective img tag.
      *
      * @see https://docs.typo3.org/typo3cms/TyposcriptReference/ContentObjects/Image/
-     *
-     * @throws \Exception
      * @throws Exception
-     * @return string Rendered tag
      */
-    public function render()
+    public function render(): string
     {
         $src = (string)$this->arguments['src'];
         if (($src === '' && $this->arguments['image'] === null) || ($src !== '' && $this->arguments['image'] !== null)) {
             throw new Exception('You must either specify a string src or a File object.', 1382284106);
         }
-        try {
-            $image = $this->imageService->getImage(
-                $this->arguments['src'],
-                $this->arguments['image'],
-                (bool)$this->arguments['treatIdAsReference']
+
+        if ((string)$this->arguments['fileExtension'] && !GeneralUtility::inList($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'], (string)$this->arguments['fileExtension'])) {
+            throw new Exception(
+                'The extension ' . $this->arguments['fileExtension'] . ' is not specified in $GLOBALS[\'TYPO3_CONF_VARS\'][\'GFX\'][\'imagefile_ext\']'
+                . ' as a valid image file extension and can not be processed.',
+                1618989190
             );
+        }
+
+        try {
+            $image = $this->imageService->getImage($src, $this->arguments['image'], (bool)$this->arguments['treatIdAsReference']);
             $cropString = $this->arguments['crop'];
             if ($cropString === null && $image->hasProperty('crop') && $image->getProperty('crop')) {
                 $cropString = $image->getProperty('crop');
@@ -113,8 +155,10 @@ class LazyImageViewHelper extends ImageViewHelper
             if (empty($this->arguments['alt'])) {
                 $this->tag->addAttribute('alt', $image->hasProperty('alternative') ? $image->getProperty('alternative') : '');
             }
-            if (empty($this->arguments['title']) && $image->hasProperty('title')) {
-                $this->tag->addAttribute('title', $image->getProperty('title'));
+            // Add title-attribute from property if not already set and the property is not an empty string
+            $title = (string)($image->hasProperty('title') ? $image->getProperty('title') : '');
+            if (empty($this->arguments['title']) && $title !== '') {
+                $this->tag->addAttribute('title', $title);
             }
         } catch (ResourceDoesNotExistException $e) {
             // thrown if file does not exist
