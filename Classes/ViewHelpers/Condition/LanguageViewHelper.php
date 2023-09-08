@@ -21,7 +21,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
- * If Viewhelper vor LanguageCode
+ * If ViewHelper for LanguageCode
  * Inspired by Maximilian Kalus, http://www.auxnet.de/typo3-sprachen-viewhelper-fuer-fluid/
  *
  * # Example: Basic example
@@ -31,10 +31,10 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
  * {namespace sj=SvenJuergens\SjViewhelpers\ViewHelpers}
  * </code>
  *
-  * <sj:condition.language value="de">
+ * <sj:condition.language value="de">
  *       <f:then>
  *         <f:render partial="de" />
-  *       </f:then>
+ *       </f:then>
  *       <f:else>
  *           <f:render partial="en" />
  *       </f:else>
