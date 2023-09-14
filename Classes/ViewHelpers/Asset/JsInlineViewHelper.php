@@ -85,7 +85,7 @@ class JsInlineViewHelper extends AbstractViewHelper
         ) {
             $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($arguments['path']));
         }
-        $name = md5(GeneralUtility::minifyJavaScript($content));
+        $name = md5((string)$content);
 
         /** @var PageRenderer $pageRenderer */
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
