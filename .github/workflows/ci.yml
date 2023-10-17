@@ -20,9 +20,12 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: composer:v2
+      - name: Install
+        run: |
+          composer update --no-progress
       - name: Lint
         run: |
           composer test:php:lint
-      - name: CGL
+      - name: PHP CS Fixer
         run: |
           composer cgl
