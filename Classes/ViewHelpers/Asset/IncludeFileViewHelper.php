@@ -133,7 +133,7 @@ class IncludeFileViewHelper extends AbstractViewHelper
                 $arguments['async'],
                 $arguments['integrity']
             );
-        // CSS
+            // CSS
         } elseif (strtolower(substr($arguments['path'], -4)) === '.css') {
             $pageRenderer->addCssFile(
                 $arguments['path'],

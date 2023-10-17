@@ -42,7 +42,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
  */
 class LanguageViewHelper extends AbstractConditionViewHelper
 {
-
     /**
      * Initialize arguments
      * @throws Exception

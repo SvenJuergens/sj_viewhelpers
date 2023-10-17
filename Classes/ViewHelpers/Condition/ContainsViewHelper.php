@@ -1,4 +1,5 @@
 <?php
+
 namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
 
 /*
@@ -44,6 +45,6 @@ class ContainsViewHelper extends AbstractConditionViewHelper
      */
     protected static function evaluateCondition($arguments = null): bool
     {
-        return is_array($arguments) && false !== strpos((string) $arguments['haystack'], (string) $arguments['needle']);
+        return is_array($arguments) &&   str_contains((string)$arguments['haystack'], (string)$arguments['needle']);
     }
 }

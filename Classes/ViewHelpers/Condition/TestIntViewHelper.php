@@ -40,7 +40,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
  */
 class TestIntViewHelper extends AbstractConditionViewHelper
 {
-
     /**
      * Initialize arguments
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception

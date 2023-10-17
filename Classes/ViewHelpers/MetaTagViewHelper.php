@@ -52,7 +52,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
  */
 class MetaTagViewHelper extends AbstractViewHelper
 {
-
     /**
      * Arguments initialization
      * @throws Exception

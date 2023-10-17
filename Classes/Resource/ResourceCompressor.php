@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 namespace SvenJuergens\SjViewhelpers\Resource;
 
 /*
@@ -19,7 +20,6 @@ namespace SvenJuergens\SjViewhelpers\Resource;
  */
 class ResourceCompressor extends \TYPO3\CMS\Core\Resource\ResourceCompressor
 {
-
     /**
      * @param string $content
      * @return string

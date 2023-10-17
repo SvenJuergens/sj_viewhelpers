@@ -53,7 +53,6 @@ class ImageInfoViewHelper extends AbstractViewHelper
      * Initialize arguments.
      *
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
-     * @return void
      */
     public function initializeArguments()
     {
@@ -80,8 +79,8 @@ class ImageInfoViewHelper extends AbstractViewHelper
         $mediaOnPage = $assetCollector->getMedia();
 
         foreach ($mediaOnPage as $mediaName => $mediaData) {
-            if (strpos($src, $mediaName) !== false) {
-                return (string) $mediaData[self::$supportedProperties[$property]];
+            if (str_contains($src, $mediaName)) {
+                return (string)$mediaData[self::$supportedProperties[$property]];
             }
         }
 

@@ -112,9 +112,9 @@ class SvgInlineViewHelper extends AbstractViewHelper
             }
 
             $svgContent = $image->getContents();
-            if($arguments['useSvgSanitizer'] === true) {
+            if ($arguments['useSvgSanitizer'] === true) {
                 $svgContent = (new SvgSanitizer())->sanitizeContent($svgContent);
-            }else {
+            } else {
                 $svgContent = trim(preg_replace('/<script[\s\S]*?>[\s\S]*?<\/script>/i', '', $svgContent));
             }
 
@@ -137,20 +137,20 @@ class SvgInlineViewHelper extends AbstractViewHelper
             }
 
             // Override attributes
-            if($arguments['class'] !== null){
+            if ($arguments['class'] !== null) {
                 $class = $arguments['class'];
                 $class = htmlspecialchars($class ?? '');
                 $svgElement = self::setAttribute($svgElement, 'class', $class);
             }
-            if($arguments['width']){
+            if ($arguments['width']) {
                 $width = $arguments['width'];
-                $width = ((int)$width) > 0 ? (string) ((int)$width) : null;
+                $width = ((int)$width) > 0 ? (string)((int)$width) : null;
                 $svgElement = self::setAttribute($svgElement, 'width', $width);
             }
 
-            if($arguments['height'] !== null){
+            if ($arguments['height'] !== null) {
                 $height = $arguments['height'];
-                $height = ((int)$height) > 0 ? (string) ((int)$height) : null;
+                $height = ((int)$height) > 0 ? (string)((int)$height) : null;
                 $svgElement = self::setAttribute($svgElement, 'height', $height);
             }
 
@@ -158,18 +158,17 @@ class SvgInlineViewHelper extends AbstractViewHelper
                 $svgElement = self::setAttribute($svgElement, 'role', 'img');
             }
 
-            if($arguments['description'] !== null) {
+            if ($arguments['description'] !== null) {
                 $description = $arguments['description'];
                 $description = htmlspecialchars($description ?? '');
                 $svgElement = self::setChild($svgElement, 'desc', $description);
             }
 
-            if($arguments['title'] !== null){
+            if ($arguments['title'] !== null) {
                 $title = $arguments['title'];
                 $title = htmlspecialchars($title ?? '');
                 $svgElement = self::setChild($svgElement, 'title', $title);
             }
-
 
             // remove xml version tag
             $domXml = dom_import_simplexml($svgElement);
@@ -177,7 +176,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
             if (!$domXml instanceof \DOMElement || !$domXml->ownerDocument instanceof \DOMDocument) {
                 return '';
             }
-            return (string) $domXml->ownerDocument->saveXML($domXml->ownerDocument->documentElement);
+            return (string)$domXml->ownerDocument->saveXML($domXml->ownerDocument->documentElement);
         } catch (ResourceDoesNotExistException $e) {
             // thrown if file does not exist
             throw new \Exception($e->getMessage(), 1530601100, $e);

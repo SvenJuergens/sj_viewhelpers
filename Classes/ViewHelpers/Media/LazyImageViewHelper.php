@@ -48,7 +48,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
  * @deprecated
 */
 
-class LazyImageViewHelper  extends AbstractTagBasedViewHelper
+class LazyImageViewHelper extends AbstractTagBasedViewHelper
 {
     /**
      * @var string
@@ -62,7 +62,6 @@ class LazyImageViewHelper  extends AbstractTagBasedViewHelper
         parent::__construct();
         $this->imageService = GeneralUtility::makeInstance(ImageService::class);
         trigger_error('deprecated with TYPO3 v12.0., replace it with self written img tag and f:uri:image', E_USER_DEPRECATED);
-
     }
     /**
      * Initialize arguments.
