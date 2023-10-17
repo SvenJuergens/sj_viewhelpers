@@ -1,12 +1,6 @@
 # Mac.
 .DS_STORE
-
-# Node.
-node_modules
-npm-debug.log
-
-# Bower
-bower_components
+.php-cs-fixer.cache
 
 #phpStorm
 .idea
