@@ -20,7 +20,6 @@
     "extra": {
         "typo3/cms": {
             "extension-key": "sj_viewhelpers",
-			"app-dir": ".Build",
 			"web-dir": ".Build/public"
 		}
     },
