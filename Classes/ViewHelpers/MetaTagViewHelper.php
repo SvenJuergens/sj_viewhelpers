@@ -83,7 +83,7 @@ class MetaTagViewHelper extends AbstractViewHelper
         }
 
         // prepend current domain
-        if ($forceAbsoluteUrl && !GeneralUtility::isFirstPartOfStr($this->arguments['content'], GeneralUtility::getIndpEnv('TYPO3_SITE_URL'))
+        if ($forceAbsoluteUrl && !str_starts_with((string)$this->arguments['content'], (string)GeneralUtility::getIndpEnv('TYPO3_SITE_URL'))
         ) {
             $this->arguments['content'] =
                 rtrim(GeneralUtility::getIndpEnv('TYPO3_SITE_URL'), '/')
