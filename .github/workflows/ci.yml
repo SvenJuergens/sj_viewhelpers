@@ -11,17 +11,8 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        typo3: ['^11', '^12']
-        php: ['7.4', '8.0', '8.1', '8.2']
-        exclude:
-          - typo3: '^12'
-            php: '7.4'
-          - typo3: '^12'
-            php: '8.0'
+        php: ['8.0', '8.1', '8.2']
     steps:
-      - name: Start Database-Server
-        run: |
-          sudo /etc/init.d/mysql start
       - name: Checkout Code
         uses: actions/checkout@v3
       - name: Set up PHP Version ${{ matrix.php }}
@@ -29,16 +20,9 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           tools: composer:v2
-      - name: Install
-        run: |
-          composer require typo3/cms-core:${{ matrix.typo3 }} --no-progress
-          git checkout composer.json
       - name: Lint
         run: |
           composer test:php:lint
-        env:
-          COMPOSER_PROCESS_TIMEOUT: 1200
-          typo3DatabaseHost: 127.0.0.1
-          typo3DatabaseName: t3func
-          typo3DatabasePassword: root
-          typo3DatabaseUsername: root
+      - name: CGL
+        run: |
+          composer cgl
