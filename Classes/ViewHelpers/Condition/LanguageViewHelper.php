@@ -46,7 +46,7 @@ class LanguageViewHelper extends AbstractConditionViewHelper
      * Initialize arguments
      * @throws Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('value', 'string', 'Language Code');

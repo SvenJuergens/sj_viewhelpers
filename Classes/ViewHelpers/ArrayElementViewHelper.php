@@ -45,7 +45,7 @@ class ArrayElementViewHelper extends AbstractViewHelper
      * Initialize arguments
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'array',

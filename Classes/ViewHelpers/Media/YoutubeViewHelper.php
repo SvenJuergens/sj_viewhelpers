@@ -49,7 +49,7 @@ class YoutubeViewHelper extends AbstractViewHelper
      * @api
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'width',

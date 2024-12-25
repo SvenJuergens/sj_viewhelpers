@@ -55,7 +55,7 @@ class CssInlineViewHelper extends AbstractViewHelper
      * Initialize arguments
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'compress',
@@ -81,7 +81,7 @@ class CssInlineViewHelper extends AbstractViewHelper
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): void {
         $content = $renderChildrenClosure();
         if ($arguments['path'] !== null && strtolower(substr($arguments['path'], -4)) === '.css') {
             $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($arguments['path']));

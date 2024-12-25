@@ -30,7 +30,7 @@ class RtrimViewHelper extends AbstractViewHelper
 {
     use CompileWithContentArgumentAndRenderStatic;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('content', 'string', 'String to trim');
         $this->registerArgument('characters', 'string', 'List of characters to trim, no separators, e.g. "abc123"');

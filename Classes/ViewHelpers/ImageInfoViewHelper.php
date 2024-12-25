@@ -54,7 +54,7 @@ class ImageInfoViewHelper extends AbstractViewHelper
      *
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('src', 'string', 'Path to a file');
         $this->registerArgument('property', 'string', 'Possible values: width, height, type, origFile, origFile_mtime');
@@ -72,7 +72,7 @@ class ImageInfoViewHelper extends AbstractViewHelper
         $property = $arguments['property'];
 
         if (!array_key_exists($property, self::$supportedProperties)) {
-            throw new \InvalidArgumentException('The value of property is invalid. Valid properties are: width, height, type, origFile or origFile_mtime');
+            throw new \InvalidArgumentException('The value of property is invalid. Valid properties are: width, height, type, origFile or origFile_mtime', 4318654235);
         }
 
         $assetCollector = self::getAssetCollector();
