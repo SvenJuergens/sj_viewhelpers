@@ -37,6 +37,9 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <code>
  * <img src="..." loading="lazy" width="{sj:lastImageInfo(property: 'width')}" height="{sj:lastImageInfo(property: 'height')}">
  * </code>
+ *
+ * @deprecated use ImageInfoViewHelper
+ *
  */
 class LastImageInfoViewHelper extends AbstractViewHelper
 {

@@ -36,7 +36,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  *  <sj:link.typolink configuration="{typoLinkConfiguration}" />
  *  <sj:link.typolink configuration="{object}">My LinkText</sj:link.typolink>
-*/
+ * @deprecated use f:link.typolink
+ */
 class TypolinkViewHelper extends AbstractViewHelper
 {
     /**

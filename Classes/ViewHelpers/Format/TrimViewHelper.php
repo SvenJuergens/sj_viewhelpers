@@ -15,6 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * Trims content by stripping off $characters
@@ -40,7 +41,7 @@ class TrimViewHelper extends AbstractViewHelper
 {
     /**
      * Initialize arguments
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initializeArguments(): void
     {

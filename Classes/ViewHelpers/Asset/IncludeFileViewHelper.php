@@ -42,6 +42,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <output>
  * This will include the file provided by {settings} in the footer (js) or in the header (css)
  * </output>
+ *
+ * @deprecated use f:asset.css/f:asset.script
  */
 class IncludeFileViewHelper extends AbstractViewHelper
 {

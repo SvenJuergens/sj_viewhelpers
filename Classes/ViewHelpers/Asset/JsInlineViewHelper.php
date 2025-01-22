@@ -37,6 +37,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <output>
  *
  * </output>
+ * @deprecated use f:asset.script
  */
 class JsInlineViewHelper extends AbstractViewHelper
 {

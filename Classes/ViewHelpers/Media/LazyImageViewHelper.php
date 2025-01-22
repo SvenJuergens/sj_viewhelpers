@@ -22,7 +22,8 @@ use TYPO3\CMS\Fluid\ViewHelpers\ImageViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
-/* Extends the ImageViewhelper to allow lazyload
+/**
+ * Extends the ImageViewhelper to allow lazyload
  *
  * Original: CHRISTIAN SONNTAG, http://www.motions-media.de/2014/03/11/extbase-fluid-image-viewhelper-erweitern-fuer-lazyloading/
  *
@@ -45,7 +46,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
  * </output>
  *
  *
- * @deprecated
+ * @deprecated deprecated with TYPO3 v12.0., replace it with self written img tag and f:uri:image
 */
 
 class LazyImageViewHelper extends AbstractTagBasedViewHelper

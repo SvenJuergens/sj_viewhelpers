@@ -94,7 +94,7 @@ class YoutubeViewHelper extends AbstractViewHelper
      * @param string $element
      * @return string|null
      */
-    public static function getYoutubeUrl($element): ?string
+    public static function getYoutubeUrl(string $element): ?string
     {
         $videoId = null;
         $youtubeUrl = null;
