@@ -48,7 +48,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
  *
  * @deprecated deprecated with TYPO3 v12.0., replace it with self written img tag and f:uri:image
 */
-
 class LazyImageViewHelper extends AbstractTagBasedViewHelper
 {
     /**

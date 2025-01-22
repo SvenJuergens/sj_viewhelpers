@@ -39,7 +39,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * </code>
  *
  * @deprecated use ImageInfoViewHelper
- *
  */
 class LastImageInfoViewHelper extends AbstractViewHelper
 {
