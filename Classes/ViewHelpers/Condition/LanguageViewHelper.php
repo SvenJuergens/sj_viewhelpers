@@ -46,7 +46,7 @@ class LanguageViewHelper extends AbstractConditionViewHelper
      * Initialize arguments
      * @throws Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('value', 'string', 'Language Code');
@@ -62,10 +62,8 @@ class LanguageViewHelper extends AbstractConditionViewHelper
         $request = $GLOBALS['TYPO3_REQUEST'] ?? null;
         $siteLanguage = $request ? $request->getAttribute('language') : null;
         if ($siteLanguage instanceof SiteLanguage) {
-            $currentLanguageCode = $siteLanguage->getTwoLetterIsoCode();
-        } else {
-            $currentLanguageCode = $GLOBALS['TSFE']->config['config']['language'] ?? null;
+            $currentLanguageCode = $siteLanguage->getLocale()->getLanguageCode();
         }
-        return $currentLanguageCode === $arguments['value'];
+        return ($currentLanguageCode ?? '') === $arguments['value'];
     }
 }

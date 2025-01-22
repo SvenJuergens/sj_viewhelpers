@@ -22,6 +22,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
@@ -46,6 +47,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <output>
  *
  * </output>
+ *
+ * @deprecated use f:asset.css
  */
 class CssInlineViewHelper extends AbstractViewHelper
 {
@@ -53,9 +56,9 @@ class CssInlineViewHelper extends AbstractViewHelper
 
     /**
      * Initialize arguments
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'compress',
@@ -81,7 +84,7 @@ class CssInlineViewHelper extends AbstractViewHelper
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): void {
         $content = $renderChildrenClosure();
         if ($arguments['path'] !== null && strtolower(substr($arguments['path'], -4)) === '.css') {
             $content .= GeneralUtility::getUrl(GeneralUtility::getFileAbsFileName($arguments['path']));

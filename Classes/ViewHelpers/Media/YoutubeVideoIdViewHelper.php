@@ -51,7 +51,7 @@ class YoutubeVideoIdViewHelper extends AbstractViewHelper
      * @param string $element
      * @return string|null
      */
-    public function getYoutubeVideoId($element)
+    public function getYoutubeVideoId(string $element): ?string
     {
         $videoId = null;
         if (preg_match('/(v=|v\\/|.be\\/)([^(\\&|$)]*)/', $element, $matches)) {

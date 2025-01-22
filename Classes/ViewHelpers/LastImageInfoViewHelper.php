@@ -37,6 +37,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <code>
  * <img src="..." loading="lazy" width="{sj:lastImageInfo(property: 'width')}" height="{sj:lastImageInfo(property: 'height')}">
  * </code>
+ *
+ * @deprecated use ImageInfoViewHelper
  */
 class LastImageInfoViewHelper extends AbstractViewHelper
 {
@@ -62,7 +64,7 @@ class LastImageInfoViewHelper extends AbstractViewHelper
      *
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         parent::initializeArguments();
         $this->registerArgument('property', 'string', 'Possible values: width, height, type, file, origFile, origFile_mtime, originalFile, processedFile, fileCacheHash');

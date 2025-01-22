@@ -71,7 +71,7 @@ class MetaTagViewHelper extends AbstractViewHelper
     /**
      * Renders a meta tag
      */
-    public function render()
+    public function render(): void
     {
         $useCurrentDomain = $this->arguments['useCurrentDomain'];
         $forceAbsoluteUrl = $this->arguments['forceAbsoluteUrl'];

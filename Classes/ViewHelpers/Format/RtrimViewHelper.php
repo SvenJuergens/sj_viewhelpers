@@ -2,9 +2,7 @@
 
 namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
 
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
  * Trims content by stripping off $characters
@@ -28,9 +26,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderS
  */
 class RtrimViewHelper extends AbstractViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('content', 'string', 'String to trim');
         $this->registerArgument('characters', 'string', 'List of characters to trim, no separators, e.g. "abc123"');
@@ -39,15 +35,12 @@ class RtrimViewHelper extends AbstractViewHelper
     /**
      * Trims content by stripping off $characters
      *
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     * @return mixed
+     * @return string
      */
-    public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
+    public function render(): string
     {
-        $characters = $arguments['characters'];
-        $content = $renderChildrenClosure();
+        $characters = $this->arguments['characters'];
+        $content = $this->renderChildren();
         if (empty($characters) === false) {
             $content = rtrim($content, $characters);
         } else {

@@ -52,7 +52,7 @@ class HeaderDataViewHelper extends AbstractViewHelper
      * Renders HeaderData
      * @throws \InvalidArgumentException
      */
-    public function render()
+    public function render(): void
     {
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->addHeaderData($this->renderChildren());

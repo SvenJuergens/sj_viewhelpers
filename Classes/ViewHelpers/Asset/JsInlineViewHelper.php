@@ -37,6 +37,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <output>
  *
  * </output>
+ * @deprecated use f:asset.script
  */
 class JsInlineViewHelper extends AbstractViewHelper
 {
@@ -44,7 +45,7 @@ class JsInlineViewHelper extends AbstractViewHelper
     /**
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'position',
@@ -78,7 +79,7 @@ class JsInlineViewHelper extends AbstractViewHelper
         array $arguments,
         \Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
-    ) {
+    ): void {
         $content = $renderChildrenClosure();
         if ($arguments['path'] !== null
             && strtolower(substr($arguments['path'], -3)) === '.js'

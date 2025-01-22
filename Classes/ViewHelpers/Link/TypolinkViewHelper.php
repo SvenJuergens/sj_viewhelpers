@@ -36,7 +36,8 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  *  <sj:link.typolink configuration="{typoLinkConfiguration}" />
  *  <sj:link.typolink configuration="{object}">My LinkText</sj:link.typolink>
-*/
+ * @deprecated use f:link.typolink
+ */
 class TypolinkViewHelper extends AbstractViewHelper
 {
     /**
@@ -48,7 +49,7 @@ class TypolinkViewHelper extends AbstractViewHelper
      * Initializes the arguments for the ViewHelper
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'configuration',

@@ -42,7 +42,7 @@ class FirstWordWrapViewHelper extends AbstractViewHelper
      * Initialize arguments
      * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument(
             'content',
@@ -62,7 +62,7 @@ class FirstWordWrapViewHelper extends AbstractViewHelper
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         if ($this->arguments['content'] === null) {
             $this->arguments['content'] = $this->renderChildren();

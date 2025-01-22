@@ -18,7 +18,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_email' => 't3YYYY@blue-side.de',
     'state' => 'stable',
     'author_company' => '',
-    'version' => '7.1.2',
+    'version' => '9.0.0',
     'constraints' => [
         'depends' => [
         ],
