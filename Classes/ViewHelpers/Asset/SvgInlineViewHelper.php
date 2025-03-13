@@ -76,6 +76,8 @@ class SvgInlineViewHelper extends AbstractViewHelper
         $this->registerArgument('description', 'string', 'Description of the svg.', false, null);
         $this->registerArgument('setRole', 'bool', 'Add role="img" to the svg.', false, true);
         $this->registerArgument('useSvgSanitizer', 'bool', 'use advanced SvgSanitizer', false, true);
+        $this->registerArgument('setAriaHidden', 'bool', 'Add aria-hidden="true" to the svg.', false, false);
+
     }
 
     /**
@@ -139,6 +141,9 @@ class SvgInlineViewHelper extends AbstractViewHelper
 
             if ($this->arguments['setRole'] === true) {
                 $svgElement = self::setAttribute($svgElement, 'role', 'img');
+            }
+            if ($this->arguments['setAriaHidden'] === true) {
+                $svgElement = self::setAttribute($svgElement, 'aria-hidden', 'true');
             }
 
             if ($this->arguments['description'] !== null) {
