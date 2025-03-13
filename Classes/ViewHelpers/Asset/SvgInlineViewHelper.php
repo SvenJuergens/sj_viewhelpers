@@ -19,10 +19,8 @@ use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
 use TYPO3\CMS\Core\Resource\Security\SvgSanitizer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Service\ImageService;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 /**
  * ViewHelper to include inline SVG
@@ -43,14 +41,16 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
  * <sj:asset.svgInline path="{settings.svgInlinePathToFolder}">contentIconPin</sj:asset.svgInline>
  * </code>
  *
+ * <code>
+ * <sj:asset.svgInline setAriaHidden="true" setRole="false" src="{encore:asset(pathToFile: 'build/Icons/decorative.svg')}"/>
+ * </code>
+ *
  * <output>
  *
  * </output>
  */
 class SvgInlineViewHelper extends AbstractViewHelper
 {
-    use CompileWithRenderStatic;
-
     /**
      * View helper returns HTML, thus we need to disable output escaping
      *
@@ -79,31 +79,22 @@ class SvgInlineViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
      * @return string
      * @throws \Exception
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ): string {
+    public function render(): string
+    {
         $src = '';
-        if (!empty($arguments['path'])) {
-            $src = $arguments['path'] . trim($renderChildrenClosure()) . '.svg';
+        if (!empty($this->arguments['path'])) {
+            $src = $this->arguments['path'] . trim($this->renderChildren()) . '.svg';
         }
-        if (!empty($arguments['src'])) {
-            $src = (string)$arguments['src'];
+        if (!empty($this->arguments['src'])) {
+            $src = (string)$this->arguments['src'];
         }
-
-        $image = $arguments['image'];
-
+        $image = $this->arguments['image'];
         if (($src === '' && $image === null) || ($src !== '' && $image !== null)) {
             throw new Exception('You must either specify a string src or a File object.', 1530601100);
         }
-
         try {
             $imageService = self::getImageService();
             $image = $imageService->getImage($src, $image, false);
@@ -112,7 +103,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
             }
 
             $svgContent = $image->getContents();
-            if ($arguments['useSvgSanitizer'] === true) {
+            if ($this->arguments['useSvgSanitizer'] === true) {
                 $svgContent = (new SvgSanitizer())->sanitizeContent($svgContent);
             } else {
                 $svgContent = trim(preg_replace('/<script[\s\S]*?>[\s\S]*?<\/script>/i', '', $svgContent));
@@ -123,49 +114,41 @@ class SvgInlineViewHelper extends AbstractViewHelper
                 return '';
             }
 
-            // Disables the functionality to allow external entities to be loaded when parsing the XML, must be kept
-            $previousValueOfEntityLoader = false;
-            if (PHP_MAJOR_VERSION < 8) {
-                $previousValueOfEntityLoader = libxml_disable_entity_loader(true);
-            }
             $svgElement = simplexml_load_string($svgContent);
-            if (PHP_MAJOR_VERSION < 8) {
-                libxml_disable_entity_loader($previousValueOfEntityLoader);
-            }
             if (!$svgElement instanceof \SimpleXMLElement) {
                 return '';
             }
 
             // Override attributes
-            if ($arguments['class'] !== null) {
-                $class = $arguments['class'];
+            if ($this->arguments['class'] !== null) {
+                $class = $this->arguments['class'];
                 $class = htmlspecialchars($class ?? '');
                 $svgElement = self::setAttribute($svgElement, 'class', $class);
             }
-            if ($arguments['width']) {
-                $width = $arguments['width'];
+            if ($this->arguments['width']) {
+                $width = $this->arguments['width'];
                 $width = ((int)$width) > 0 ? (string)((int)$width) : null;
                 $svgElement = self::setAttribute($svgElement, 'width', $width);
             }
 
-            if ($arguments['height'] !== null) {
-                $height = $arguments['height'];
+            if ($this->arguments['height'] !== null) {
+                $height = $this->arguments['height'];
                 $height = ((int)$height) > 0 ? (string)((int)$height) : null;
                 $svgElement = self::setAttribute($svgElement, 'height', $height);
             }
 
-            if ($arguments['setRole'] === true) {
+            if ($this->arguments['setRole'] === true) {
                 $svgElement = self::setAttribute($svgElement, 'role', 'img');
             }
 
-            if ($arguments['description'] !== null) {
-                $description = $arguments['description'];
+            if ($this->arguments['description'] !== null) {
+                $description = $this->arguments['description'];
                 $description = htmlspecialchars($description ?? '');
                 $svgElement = self::setChild($svgElement, 'desc', $description);
             }
 
-            if ($arguments['title'] !== null) {
-                $title = $arguments['title'];
+            if ($this->arguments['title'] !== null) {
+                $title = $this->arguments['title'];
                 $title = htmlspecialchars($title ?? '');
                 $svgElement = self::setChild($svgElement, 'title', $title);
             }
