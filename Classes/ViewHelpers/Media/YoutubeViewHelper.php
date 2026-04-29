@@ -14,8 +14,8 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Media;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * Implementation of youtube support
@@ -47,7 +47,7 @@ class YoutubeViewHelper extends AbstractViewHelper
      * Initialize arguments.
      *
      * @api
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initializeArguments(): void
     {
@@ -68,21 +68,15 @@ class YoutubeViewHelper extends AbstractViewHelper
     }
 
     /**
-     * @param array $arguments
-     * @param \Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     * @return mixed|string
+     * @return string
      */
-    public static function renderStatic(
-        array $arguments,
-        \Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ) {
-        $width = $arguments['width'];
-        $height = $arguments['height'];
+    public function render(): string
+    {
+        $width = $this->arguments['width'];
+        $height = $this->arguments['height'];
         $content = '';
 
-        $url = static::getYoutubeUrl((string)$renderChildrenClosure());
+        $url = static::getYoutubeUrl((string)$this->renderChildren());
 
         if ($url !== null) {
             $content = '<iframe width="' . $width . '" height="' . $height . '" src="' . htmlspecialchars($url) . '" frameborder="0"></iframe>';

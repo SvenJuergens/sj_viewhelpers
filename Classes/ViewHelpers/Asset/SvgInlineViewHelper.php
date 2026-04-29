@@ -87,7 +87,7 @@ class SvgInlineViewHelper extends AbstractViewHelper
     {
         $src = '';
         if (!empty($this->arguments['path'])) {
-            $src = $this->arguments['path'] . trim($this->renderChildren()) . '.svg';
+            $src = $this->arguments['path'] . trim((string)$this->renderChildren()) . '.svg';
         }
         if (!empty($this->arguments['src'])) {
             $src = (string)$this->arguments['src'];
@@ -107,11 +107,11 @@ class SvgInlineViewHelper extends AbstractViewHelper
             if ($this->arguments['useSvgSanitizer'] === true) {
                 $svgContent = (new SvgSanitizer())->sanitizeContent($svgContent);
             } else {
-                $svgContent = trim(preg_replace('/<script[\s\S]*?>[\s\S]*?<\/script>/i', '', $svgContent));
+                $svgContent = trim((string)preg_replace('/<script[\s\S]*?>[\s\S]*?<\/script>/i', '', $svgContent));
             }
 
             // Exit if file does not contain content
-            if (empty($svgContent)) {
+            if ($svgContent === '' || $svgContent === '0') {
                 return '';
             }
 

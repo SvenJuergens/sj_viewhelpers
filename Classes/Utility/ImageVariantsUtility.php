@@ -65,7 +65,7 @@ class ImageVariantsUtility
      */
     public static function getImageVariants(?array $variants = null, ?array $multiplier = null, ?array $gutters = null, ?array $corrections = null, ?float $aspectRatio = null): array
     {
-        $variants = $variants !== null ? $variants : [];
+        $variants ??= [];
         $variants = self::processVariants($variants);
         $variants = self::processResolutions($variants);
         if ($gutters !== null) {
@@ -115,7 +115,7 @@ class ImageVariantsUtility
             ) {
                 continue;
             }
-            $workingSizes[substr($key, 0, -1) . ''] = [
+            $workingSizes[substr((string)$key, 0, -1) . ''] = [
                 'multiplier' => 1 * $settings['multiplier'],
             ];
         }
@@ -224,7 +224,7 @@ class ImageVariantsUtility
     protected static function processAspectRatio(array $variants, float $aspectRatio): array
     {
         if ($aspectRatio > 0) {
-            foreach ($variants as $variant => $value) {
+            foreach (array_keys($variants) as $variant) {
                 $variants[$variant]['aspectRatio'] = $aspectRatio;
             }
         }
@@ -239,7 +239,7 @@ class ImageVariantsUtility
     {
         return !(
             !is_string($key) ||
-            substr($key, -1, 1) !== 'x' ||
+            !str_ends_with($key, 'x') ||
             !is_numeric(substr($key, 0, -1)) ||
             (float)substr($key, 0, -1) < 1 ||
             (float)substr($key, 0, -1) !== round((float)substr($key, 0, -1), 1)

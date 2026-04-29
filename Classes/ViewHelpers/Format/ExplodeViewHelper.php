@@ -16,6 +16,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Format;
  */
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * ViewHelper to wrap the FirstWord of a Text
@@ -44,7 +45,7 @@ class ExplodeViewHelper extends AbstractViewHelper
 {
     /**
      * Initialize arguments
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initializeArguments(): void
     {

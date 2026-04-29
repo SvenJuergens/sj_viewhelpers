@@ -5,6 +5,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * ViewHelper to get the ImageInfos like width and height
@@ -58,7 +59,7 @@ class ImageInfoViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      *
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initializeArguments(): void
     {
@@ -79,7 +80,7 @@ class ImageInfoViewHelper extends AbstractViewHelper
         $assetCollector = self::getAssetCollector();
         $mediaOnPage = $assetCollector->getMedia();
         foreach ($mediaOnPage as $mediaName => $mediaData) {
-            if (str_contains($src, $mediaName)) {
+            if (str_contains((string)$src, (string)$mediaName)) {
                 return (string)$mediaData[self::$supportedProperties[$property]];
             }
         }

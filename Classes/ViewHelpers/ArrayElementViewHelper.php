@@ -15,6 +15,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * ViewHelper to get an Arraykey
@@ -43,7 +44,7 @@ class ArrayElementViewHelper extends AbstractViewHelper
 {
     /**
      * Initialize arguments
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initializeArguments(): void
     {
