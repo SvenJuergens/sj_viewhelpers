@@ -10,8 +10,7 @@
 		"typo3/cms-extbase": "^12.4.22 || ^13.4",
         "ext-libxml": "*",
         "ext-dom": "*",
-        "ext-simplexml": "*",
-		"php": "^8.2"
+        "ext-simplexml": "*"
 	},
     "autoload": {
         "psr-4": {
@@ -32,9 +31,9 @@
 		}
 	},
     "require-dev": {
-        "php-parallel-lint/php-parallel-lint": "^1.2",
-        "php-parallel-lint/php-console-highlighter": "^0.5.0",
-        "typo3/coding-standards": "^0.7.1"
+        "php-parallel-lint/php-parallel-lint": "*",
+        "php-parallel-lint/php-console-highlighter": "*",
+        "typo3/coding-standards": "*"
     },
     "scripts": {
         "test:php:lint": [
