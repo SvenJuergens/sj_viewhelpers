@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /***************************************************************
  * Extension Manager/Repository config file for ext "sj_viewhelpers".
  *
@@ -9,7 +11,6 @@
  * Only the data in the array - everything else is removed by next
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
-
 $EM_CONF[$_EXTKEY] = [
     'title' => 'SJ_Viewhelpers',
     'description' => 'some specific Viewhelpers',
