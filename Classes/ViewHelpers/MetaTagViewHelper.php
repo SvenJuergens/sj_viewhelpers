@@ -52,13 +52,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
  */
 class MetaTagViewHelper extends AbstractViewHelper
 {
+    public function __construct(private readonly PageRenderer $pageRenderer) {}
     /**
      * Arguments initialization
      * @throws Exception
      */
     public function initializeArguments(): void
     {
-        $this->registerArgument('type', 'string', 'The type of the meta tag. Allowed values are property, name or http-equiv', true, 'name');
+        $this->registerArgument('type', 'string', 'The type of the meta tag. Allowed values are property, name or http-equiv', true);
         $this->registerArgument('name', 'string', 'The name of the property to add', true);
         $this->registerArgument('content', 'string', 'The content of the meta tag', false);
         $this->registerArgument('subProperties', 'array', 'Subproperties of the meta tag (like e.g. og:image:width -> {width: 400, height:400})', false);
@@ -87,12 +88,12 @@ class MetaTagViewHelper extends AbstractViewHelper
             $this->arguments['content'] =
                 rtrim(GeneralUtility::getIndpEnv('TYPO3_SITE_URL'), '/')
                 . '/'
-                . ltrim($this->arguments['content'])
+                . ltrim((string)$this->arguments['content'])
             ;
         }
 
         if ($useCurrentDomain || (isset($this->arguments['content']) && !empty($this->arguments['content']))) {
-            $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+            $pageRenderer = $this->pageRenderer;
             $pageRenderer->setMetaTag(
                 (string)$this->arguments['type'],
                 (string)$this->arguments['name'],

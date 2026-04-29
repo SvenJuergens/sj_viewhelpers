@@ -67,9 +67,9 @@ class TrimViewHelper extends AbstractViewHelper
             $this->arguments['content'] = $this->renderChildren();
         }
         if ($this->arguments['characters'] !== null) {
-            $this->arguments['content'] = trim($this->arguments['content'], $this->arguments['characters']);
+            $this->arguments['content'] = trim((string)$this->arguments['content'], $this->arguments['characters']);
         } else {
-            $this->arguments['content'] = trim($this->arguments['content']);
+            $this->arguments['content'] = trim((string)$this->arguments['content']);
         }
         return $this->arguments['content'];
     }

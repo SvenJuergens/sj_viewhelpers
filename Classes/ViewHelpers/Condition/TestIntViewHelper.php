@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
 
 /**
@@ -17,6 +19,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
 
 /**
  * If Viewhelper vor TestInt
@@ -42,7 +45,7 @@ class TestIntViewHelper extends AbstractConditionViewHelper
 {
     /**
      * Initialize arguments
-     * @throws \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initializeArguments(): void
     {
@@ -57,6 +60,6 @@ class TestIntViewHelper extends AbstractConditionViewHelper
      */
     public static function verdict(array $arguments, RenderingContextInterface $renderingContext): bool
     {
-        return MathUtility::canBeInterpretedAsInteger($arguments['value']) === true;
+        return MathUtility::canBeInterpretedAsInteger($arguments['value']);
     }
 }

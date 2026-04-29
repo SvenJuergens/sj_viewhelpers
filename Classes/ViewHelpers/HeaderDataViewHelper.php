@@ -15,7 +15,6 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
@@ -48,13 +47,14 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class HeaderDataViewHelper extends AbstractViewHelper
 {
+    public function __construct(private readonly PageRenderer $pageRenderer) {}
     /**
      * Renders HeaderData
      * @throws \InvalidArgumentException
      */
     public function render(): void
     {
-        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer = $this->pageRenderer;
         $pageRenderer->addHeaderData($this->renderChildren());
     }
 }

@@ -41,11 +41,7 @@ class RtrimViewHelper extends AbstractViewHelper
     {
         $characters = $this->arguments['characters'];
         $content = $this->renderChildren();
-        if (empty($characters) === false) {
-            $content = rtrim($content, $characters);
-        } else {
-            $content = rtrim($content);
-        }
+        $content = empty($characters) === false ? rtrim((string)$content, $characters) : rtrim((string)$content);
         return $content;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
 
 /*
@@ -8,7 +10,7 @@ namespace SvenJuergens\SjViewhelpers\ViewHelpers\Condition;
  * For the full copyright and license information, please read the
  * LICENSE.md file that was distributed with this source code.
  */
-
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
 
 /**
@@ -41,9 +43,10 @@ class ContainsViewHelper extends AbstractConditionViewHelper
 
     /**
      * @param array $arguments
+     * @param RenderingContextInterface $renderingContext
      * @return bool
      */
-    protected static function evaluateCondition($arguments = null): bool
+    public static function verdict(array $arguments, RenderingContextInterface $renderingContext): bool
     {
         return is_array($arguments) &&   str_contains((string)$arguments['haystack'], (string)$arguments['needle']);
     }
